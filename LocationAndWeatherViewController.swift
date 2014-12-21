@@ -35,8 +35,6 @@ class LocationAndWeatherViewController: UIViewController, CLLocationManagerDeleg
     var weather:Weather!
     
     
-    
-    
 
     //MARK: outlets
    
@@ -107,7 +105,7 @@ class LocationAndWeatherViewController: UIViewController, CLLocationManagerDeleg
         NSLog("%@", "Search button clicked")
         if searchBar.text != "" {
             self.location.city = searchBar.text
-            updateTheWeatherForLocation(current: false)
+            updateTheWeatherForLocation(byCoordinates: false)
         }
         
         self.resignFirstResponder()
@@ -117,7 +115,7 @@ class LocationAndWeatherViewController: UIViewController, CLLocationManagerDeleg
     //MARK: - update button
     
     @IBAction func update(sender: UIBarButtonItem) {
-        updateTheWeatherForLocation(current: true)
+        updateTheWeatherForLocation(byCoordinates: true)
     }
     
     
@@ -218,7 +216,7 @@ class LocationAndWeatherViewController: UIViewController, CLLocationManagerDeleg
          activityIndicator.startAnimating()
             
          self.location.locationWithCLLocationCoordinate(loc.coordinate)
-         updateTheWeatherForLocation(current: true)
+         updateTheWeatherForLocation(byCoordinates: true)
             
          activityIndicator.stopAnimating()
     
@@ -232,11 +230,11 @@ class LocationAndWeatherViewController: UIViewController, CLLocationManagerDeleg
     
     //MARK: - Weather
 
-    func updateTheWeatherForLocation(#current: Bool) {
+    func updateTheWeatherForLocation(#byCoordinates: Bool) {
         
         var urlStr = ""
       
-        if current {
+        if byCoordinates {
          
             urlStr = "http://api.openweathermap.org/data/2.5/weather?lat=\(self.location.latitude)&lon=\(self.location.longitude)&&APPID=\(APIKey)"
             
@@ -246,7 +244,7 @@ class LocationAndWeatherViewController: UIViewController, CLLocationManagerDeleg
         }
         
         
-        /* let url = NSURL(string: urlStr.stringByReplacingOccurrencesOfString(" ", withString: "_" ))
+        let url = NSURL(string: urlStr.stringByReplacingOccurrencesOfString(" ", withString: "_" ))
         var request = NSURLRequest(URL: url!)
         var response:NSURLResponse?
         var error:NSError?
@@ -261,6 +259,7 @@ class LocationAndWeatherViewController: UIViewController, CLLocationManagerDeleg
             var JSON: AnyObject? = NSJSONSerialization.JSONObjectWithData(responseData!, options: NSJSONReadingOptions.MutableContainers, error: &parsingError)
             
             if (parsingError == nil) {
+                self.error = .None
                 var JSONDictionary = JSON as Dictionary<String, AnyObject>
                 self.location.locationWithJSON(JSONDictionary: JSONDictionary)
                 self.weather.weatherWithJSON(JSONDictionary: JSONDictionary)
@@ -269,10 +268,10 @@ class LocationAndWeatherViewController: UIViewController, CLLocationManagerDeleg
                 NSLog("%@", "Couldn't get the JSON from API data")
                 self.error = .Other
             }
-        }*/
+        }
         
         //if there's no internet connection
-        let fileUrl = "/Users/anna/Desktop/weather.json"
+        /* let fileUrl = "/Users/anna/Desktop/weather.json"
         var responseData = NSData(contentsOfFile: fileUrl)
         var parsingError:NSError?
         var JSON: AnyObject? = NSJSONSerialization.JSONObjectWithData(responseData!, options: NSJSONReadingOptions.MutableContainers, error: &parsingError)
@@ -286,7 +285,7 @@ class LocationAndWeatherViewController: UIViewController, CLLocationManagerDeleg
             NSLog("%@", "Couldn't get the JSON from API data")
             self.error = .Other
         }
-        
+        */
         
         
         if (self.error == .None) {
@@ -315,7 +314,7 @@ class LocationAndWeatherViewController: UIViewController, CLLocationManagerDeleg
         wind.text = "Wind \(weather.wind) mps"
         
         //comment if there's no internet connection
-        //image.image = UIImage(data: weather.icon!)
+        image.image = UIImage(data: weather.icon!)
         
         if facebookShareButton.hidden {
             facebookShareButton.hidden = false
