@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LocationAndWeatherViewController.swift"
-            timestampString = "440861317.971479"
+            timestampString = "441056379.915884"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
+            startingLineNumber = "273"
+            endingLineNumber = "273"
             landmarkName = "updateTheWeatherForLocation(byCoordinates:)"
             landmarkType = "5">
          </BreakpointContent>

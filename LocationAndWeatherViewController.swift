@@ -244,7 +244,8 @@ class LocationAndWeatherViewController: UIViewController, CLLocationManagerDeleg
         }
         
         
-        let url = NSURL(string: urlStr.stringByReplacingOccurrencesOfString(" ", withString: "_" ))
+        let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!.stringByReplacingOccurrencesOfString(" ", withString: "_" ))
+
         var request = NSURLRequest(URL: url!)
         var response:NSURLResponse?
         var error:NSError?
